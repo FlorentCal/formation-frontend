@@ -7,9 +7,13 @@ module.exports = {
     listerToutesLesSessions : function(){
         return moduleDevfest.sessions
     },    
+    trouverSpeaker : function(idSpeaker){
+        var speaker = moduleDevfest.speakers.find(speaker => speaker.id == idSpeaker)
+        return speaker.firstname + ' ' + speaker.lastname
+    },
     trouverUneSession : function(idSession){
         var session = (moduleDevfest.sessions.find(session => session.id == idSession))
-        console.log(session.title)
+        console.log(session.title + '\n   Nom du speaker : ' + this.trouverSpeaker(session.speakers))
         return session
     },    
     listerTopPresentateurs : function(){
