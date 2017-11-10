@@ -28,8 +28,11 @@ var menus = {
     },
     '4' : {
         libelle : 'Détail d\'une session',
-        execute : function(idSession){
-            moduleService.trouverUneSession(idSession)
+        execute : function(){
+            rl.question('Id de la session :\n', (line) => {
+                moduleService.trouverUneSession(line)
+                rl.prompt()
+            })
         }
     },
     '99' : {
@@ -51,22 +54,18 @@ rl.setPrompt(menu)
 rl.prompt()
 
 rl.on('line', (line) => {
-    var splittedLine = line.split(' ')
-    var choice = splittedLine[0]
 
-    if(tab.indexOf(choice) == -1) {
-        console.log("Choix invalide")
-    } else if(splittedLine[0] == '4'){
-        menus[splittedLine[0]].execute(splittedLine[1])
-    }
+    if(tab.indexOf(line) == -1) {
+        console.log('Choix invalide')
+    } 
     else{
-        menus[splittedLine[0]].execute()
+        menus[line].execute()
     }
    
     rl.prompt();
-  }).on('close', () => {
+}).on('close', () => {
     console.log('Au revoir !');
     process.exit(0);
-  });
+});
 
 
