@@ -9,11 +9,12 @@ module.exports = {
     },    
     trouverSpeaker : function(idSpeaker){
         var speaker = moduleDevfest.speakers.find(speaker => speaker.id == idSpeaker)
-        return speaker.firstname + ' ' + speaker.lastname
+        return 'Nom du speaker : ' + speaker.firstname + ' ' + speaker.lastname
     },
     trouverUneSession : function(idSession){
         var session = (moduleDevfest.sessions.find(session => session.id == idSession))
-        console.log(session.title + '\n   Nom du speaker : ' + this.trouverSpeaker(session.speakers))
+        session.speakers.forEach(speaker => console.log(this.trouverSpeaker(speaker)))
+        console.log('\tSession : ' + session.title)
         return session
     },    
     listerTopPresentateurs : function(){
