@@ -111,7 +111,7 @@ class TripService {
                 if (tripFound) {
                     resolve(tripFound)   
                 } else {
-                    reject('No trip with name ' + tripName)
+                    reject(`No trip with name ${tripName}`)
                 }
             }
             , 2000)
@@ -134,7 +134,7 @@ class PriceService {
                 if (price) {
                     resolve(price)
                 } else {
-                    reject('No price found for trip id ' + tripId)
+                    reject(`No price found for trip id ${tripId}`)
                 }
             }
             , 2000)
