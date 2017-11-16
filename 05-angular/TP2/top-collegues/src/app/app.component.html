@@ -1,7 +1,7 @@
 <div class="container-fluid">
-  <h1>Top Collègues</h1>
-  <h6>Les meilleurs collègues du moment</h6>
-  <div class="row">
+  <h1 class="top">Top Collègues</h1>
+  <h6 class="top">Les meilleurs collègues du moment</h6>
+  <div class="row top">
     <label class="control-label col-sm-1 right" for="pseudo">Pseudo :</label>
     <div class="col-sm-10">
       <input type="text" #pseudo class="form-control" placeholder="Pseudo">
@@ -13,13 +13,15 @@
       <input type="text" #imageUrl class="form-control" placeholder="URL image">
     </div>
     <div class="col-11">
-      <button type="button" class="btn btn-primary float-right" (click)="add(pseudo, imageUrl)">Ajouter un nouveau collègue</button>
+      <button type="button" class="btn btn-primary float-right top-low" (click)="add(pseudo, imageUrl)">Ajouter un nouveau collègue</button>
     </div>
   </div>
   <div class="row">
-      <ngb-alert class="col-11" *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+    <ngb-alert class="col-11" *ngIf="successMessage" type="success" (close)="successMessage = null">{{ successMessage }}</ngb-alert>
+  </div>
+  <div class="row">
+    <div *ngFor='let collegue of collegues' class="col-3">
+      <app-un-collegue [collegue]="collegue"></app-un-collegue>
     </div>
-  <div *ngFor='let collegue of collegues'>
-    <app-un-collegue [collegue]="collegue"></app-un-collegue>
   </div>
 </div>

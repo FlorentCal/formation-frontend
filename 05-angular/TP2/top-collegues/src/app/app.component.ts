@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.collegues = [
       new Collegue('Florent',
-                  'https://avatars2.githubusercontent.com/u/32134408?s=400&u=0d4df0a68c62d8d448de2f801bb23dbdf86dba7c&v=4',
+                  'http://i.imgur.com/eRKJG.jpg',
                   150),
       new Collegue('Olivier', 
                   'https://pbs.twimg.com/profile_images/570625160508485632/B1cGbyTD.png',
