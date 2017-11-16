@@ -1,8 +1,9 @@
 import { Component } from '@angular/core'
 import { Collegue } from './shared/domain/collegue'
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks'
-import {Subject} from 'rxjs/Subject'
-import {debounceTime} from 'rxjs/operator/debounceTime'
+import { Subject } from 'rxjs/Subject'
+import { debounceTime } from 'rxjs/operator/debounceTime'
+import { CollegueService } from './shared/service/collegue.service';
 
 @Component({
   selector: 'app-root',
@@ -17,33 +18,25 @@ export class AppComponent implements OnInit {
 
   staticAlertClosed = false
 
+  constructor(private _collegueService: CollegueService) {
+
+  }
+
   ngOnInit() {
-    this.collegues = [
-      new Collegue('Florent',
-                  'http://i.imgur.com/eRKJG.jpg',
-                  150),
-      new Collegue('Olivier', 
-                  'https://pbs.twimg.com/profile_images/570625160508485632/B1cGbyTD.png',
-                  200),
-      new Collegue('Nicolas', 
-                  'https://d1zfszn0v5ya99.cloudfront.net/user/549521/profile_picture/5584eb547af16_square.png', 
-                  170),
-      new Collegue('Ange', 
-                  'https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAm9AAAAJGFlNjI3NmZmLTc5ZDMtNDA1Zi05MjBiLWM1OTNmZmY2MjM2ZA.jpg',
-                  15),
-      new Collegue('Benjamin', 
-                  'https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAy2AAAAJGQ4ZjNkNDRhLTg5MGQtNGY3MC1hODA1LTcyODk1Y2ViYzg4Yg.jpg', 
-                  32)
-    ]
+
+    this._collegueService.listerCollegues()
+      .then(data => { return this.collegues = data })
+      .catch(exception => console.log(exception))
+
     setTimeout(() => this.staticAlertClosed = true, 20000);
-    
-        this._success.subscribe((message) => this.successMessage = message);
-        debounceTime.call(this._success, 5000).subscribe(() => this.successMessage = null);
+
+    this._success.subscribe((message) => this.successMessage = message);
+    debounceTime.call(this._success, 5000).subscribe(() => this.successMessage = null);
   }
 
   add(pseudo: HTMLInputElement, imageUrl: HTMLInputElement) {
 
-    this.collegues.push(new Collegue(pseudo.value, imageUrl.value, 0))
+    this._collegueService.sauvegarder(new Collegue(pseudo.value, imageUrl.value, 0))
 
     this._success.next(`Le collègue ${pseudo.value} a été ajouté avec succès`)
 
@@ -52,4 +45,12 @@ export class AppComponent implements OnInit {
 
     return false
   }
+
+  supprimer(collegue: Collegue) {
+    this._collegueService.supprimer(collegue)
+    this._collegueService.listerCollegues()
+      .then(data => { return this.collegues = data })
+      .catch(exception => console.log(exception))
+  }
+
 }
