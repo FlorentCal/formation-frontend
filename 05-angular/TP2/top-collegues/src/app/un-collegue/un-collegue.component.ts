@@ -11,21 +11,21 @@ import { CollegueService } from '../shared/service/collegue.service';
 export class UnCollegueComponent implements OnInit {
 
   @Input() collegue: Collegue;
-  collegueService: CollegueService
-  constructor() {
+  constructor(private _collegueService: CollegueService) {
 
   }
 
   jaime() {
     // événement clic sur le bouton "J'aime"
     // => le score du collègue est augmenté de 10
-    this.collegue.score += 10
-    this.collegueService.aimerUnCollegue(this.collegue)
+    this._collegueService.aimerUnCollegue(this.collegue)
+      .then(col => this.collegue = col)
   }
   jedeteste() {
     // événement clic sur le bouton "Je déteste"
     // => le score du collègue est diminué de 5
-    this.collegueService.detesterUnCollegue(this.collegue)
+    this._collegueService.detesterUnCollegue(this.collegue)
+      .then(col => this.collegue = col)
   }
 
   ngOnInit() {
