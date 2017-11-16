@@ -37,8 +37,14 @@ export class AppComponent implements OnInit {
   add(pseudo: HTMLInputElement, imageUrl: HTMLInputElement) {
 
     this._collegueService.sauvegarder(new Collegue(pseudo.value, imageUrl.value, 0))
-
-    this._success.next(`Le collègue ${pseudo.value} a été ajouté avec succès`)
+    .then(collegue => {
+      if(collegue != undefined){
+        this.collegues.push(collegue)
+        this._success.next(`Le collègue ${collegue.nom} a été ajouté avec succès`)
+      } else{
+        this._success.next(`Le collègue existe déjà`)
+      }
+    })
 
     pseudo.value = ''
     imageUrl.value = ''
