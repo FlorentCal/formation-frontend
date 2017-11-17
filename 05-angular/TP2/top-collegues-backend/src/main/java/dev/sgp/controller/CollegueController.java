@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dev.sgp.entite.Collegue;
+import dev.sgp.exception.CollegueException;
 import dev.sgp.repository.CollegueRepository;
 
 @RestController
 @RequestMapping("/collegues")
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins="*")
 public class CollegueController {
-	
+
 	@Autowired
 	private CollegueRepository collegues;
 
@@ -28,32 +29,44 @@ public class CollegueController {
 	public List<Collegue> listerCollegues() {
 		return collegues.findAll();	
 	}
-	
-	
+
+	@GetMapping(path="/detail/{nom}")
+	public Collegue trouverCollegue(@PathVariable String nom) {
+		return collegues.findByNom(nom);
+	}
+
 	@PostMapping()
-	public Collegue ajouterCollegue(@RequestBody Collegue newCollegue) {
+	public Collegue ajouterCollegue(@RequestBody Collegue newCollegue) throws CollegueException {
 		if(collegues.findByNom(newCollegue.getNom()) != null){
-			return null;
+			throw new CollegueException("Le collègue " + newCollegue.getNom() + " existe déjà" );
+		} else if(newCollegue.getNom().trim().equals("")){
+			throw new CollegueException("Entrez un nom pour le collègue");
+		} else if(newCollegue.getUrl().trim().equals("")){
+			throw new CollegueException("Entrez un url pour le collègue");
 		}
 		collegues.save(newCollegue);
 		return newCollegue;
 	}
-	
+
 	@DeleteMapping()
 	public Collegue supprimerCollaborateur(@RequestBody Collegue collegue) {
-		
+
 		collegues.delete(collegue);
 		return collegue;
 	}
-	
-	@PutMapping(path = "/{pseudo}/score")
-	public Collegue modifierScore(@PathVariable String pseudo, @RequestBody Collegue collegue){
 
+	@PutMapping(path = "/{pseudo}/score")
+	public Collegue modifierScore(@PathVariable String pseudo, @RequestBody Integer action){
+
+		Collegue collegue = collegues.findByNom(pseudo);
+		
+		collegue.setScore(collegue.getScore() + action);
+		
 		collegues.save(collegue);
-		
+
 		return collegue;
-		
+
 	}
-	
-	
+
+
 }

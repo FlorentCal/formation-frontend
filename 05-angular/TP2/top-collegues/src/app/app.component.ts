@@ -14,7 +14,9 @@ export class AppComponent implements OnInit {
 
   collegues: Collegue[]
   private _success = new Subject<string>()
+  private _error = new Subject<string>()
   successMessage: string
+  errorMessage: string
 
   staticAlertClosed = false
 
@@ -23,12 +25,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    
+    setTimeout(() => this.staticAlertClosed = true, 20000)
 
-    this._collegueService.listerCollegues()
-      .then(data => { return this.collegues = data })
-      .catch(exception => console.log(exception))
-
-    setTimeout(() => this.staticAlertClosed = true, 20000);
+    this._error.subscribe((message) => this.errorMessage = message)
+    debounceTime.call(this._error, 5000).subscribe(() => this.errorMessage = null)
 
     this._success.subscribe((message) => this.successMessage = message);
     debounceTime.call(this._success, 5000).subscribe(() => this.successMessage = null);
@@ -38,16 +39,14 @@ export class AppComponent implements OnInit {
 
     this._collegueService.sauvegarder(new Collegue(pseudo.value, imageUrl.value, 0))
     .then(collegue => {
-      if(collegue != undefined){
-        this.collegues.push(collegue)
-        this._success.next(`Le collègue ${collegue.nom} a été ajouté avec succès`)
-      } else{
-        this._success.next(`Le collègue existe déjà`)
-      }
+      this.collegues.push(collegue)
+      this._success.next(`Le collègue ${collegue.nom} a été ajouté avec succès`)
+      pseudo.value = ''
+      imageUrl.value = ''
+    }, excpetion => {
+      this._error.next(excpetion.error.message)
+      pseudo.focus()
     })
-
-    pseudo.value = ''
-    imageUrl.value = ''
 
     return false
   }

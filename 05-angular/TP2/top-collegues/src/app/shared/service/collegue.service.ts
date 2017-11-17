@@ -23,18 +23,20 @@ export class CollegueService {
     return this.http.get<Collegue[]>('http://localhost:8080/collegues').toPromise()
   }
 
+  trouverCollegue(nom: string): Promise<Collegue> {
+    return this.http.get<Collegue>(`http://localhost:8080/collegues/detail/${nom}`).toPromise()
+  }
+
   sauvegarder(newCollegue: Collegue): Promise<Collegue> {
     return this.http.post<Collegue>('http://localhost:8080/collegues', newCollegue, httpOptions).toPromise()
   }
 
   aimerUnCollegue(unCollegue: Collegue): Promise<Collegue> {
-    unCollegue.score += 10
-    return this.http.post<Collegue>('http://localhost:8080/collegues/'+ unCollegue.nom + '/score', unCollegue, httpOptions).toPromise()
+    return this.http.put<Collegue>('http://localhost:8080/collegues/'+ unCollegue.nom + '/score', 10, httpOptions).toPromise()
   }
 
   detesterUnCollegue(unCollegue: Collegue): Promise<Collegue> {
-    unCollegue.score -= 5
-    return this.http.post<Collegue>('http://localhost:8080/collegues/'+ unCollegue.nom + '/score', unCollegue, httpOptions).toPromise()
+    return this.http.put<Collegue>('http://localhost:8080/collegues/'+ unCollegue.nom + '/score', -5, httpOptions).toPromise()
   }
 
 

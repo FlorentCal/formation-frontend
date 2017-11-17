@@ -26,19 +26,19 @@ public class InitialiserController {
 		
 		Stream.of(
 				new Collegue("Florent",
-					      "https://avatars2.githubusercontent.com/u/32134408?s=400&u=0d4df0a68c62d8d448de2f801bb23dbdf86dba7c&v=4",
+					      "http://s1.r29static.com//bin/entry/382/0,0,2000,2000/x/1761182/image.png",
 					      15000),
 					    new Collegue("Olivier",
-					      "https://pbs.twimg.com/profile_images/570625160508485632/B1cGbyTD.png",
-					      200),
+					      "http://winneris.biz/wp-content/uploads/2017/03/ABIGAIL-SPENCER-2-1.jpg",
+					      200000000),
 					    new Collegue("Nicolas",
-					      "https://d1zfszn0v5ya99.cloudfront.net/user/549521/profile_picture/5584eb547af16_square.png",
-					      170),
+					      "http://s3.r29static.com//bin/entry/607/0,200,2000,2000/x,80/1551091/image.jpg",
+					      9999),
 					    new Collegue("Ange",
-					      "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAm9AAAAJGFlNjI3NmZmLTc5ZDMtNDA1Zi05MjBiLWM1OTNmZmY2MjM2ZA.jpg",
-					      15),
+					      "https://68.media.tumblr.com/d1264e97a7b67038ba99e4bb41527185/tumblr_npfbm1QEoU1uotx9to1_1280.jpg",
+					      152015),
 					    new Collegue("Benjamin",
-					      "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAy2AAAAJGQ4ZjNkNDRhLTg5MGQtNGY3MC1hODA1LTcyODk1Y2ViYzg4Yg.jpg",
+					      "http://img.rtl.it/RTLFM/News/Article/1000x1000/rocco-siffredi-ricordo-il-giorno-della-morte-di-mio-fratello-hhy3n.jpg",
 					      32)
 				).forEach(collegues::save);
 		
